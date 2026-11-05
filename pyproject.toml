@@ -1,0 +1,11 @@
+[project]
+name = "private-rag-system"
+version = "0.1.0"
+description = "A private question-answering service for technical documentation."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.162.0",
+    "pydantic-settings>=2.16.2",
+    "requests>=2.34.2",
+]

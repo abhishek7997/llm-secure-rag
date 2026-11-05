@@ -1,0 +1,21 @@
+services:
+  db:
+    image: pgvector/pgvector:pg18-trixie
+    container_name: rag_vec_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is not set}
+    ports:
+      - "${POSTGRES_HOST_PORT:?POSTGRES_HOST_PORT is not set}:5432"
+    volumes:
+      - rag_pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:?POSTGRES_USER is not set}", "-d", "${POSTGRES_DB:?POSTGRES_DB is not set}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  rag_pgdata:
